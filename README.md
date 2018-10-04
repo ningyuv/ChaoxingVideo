@@ -1,2 +1,2 @@
 # ChaoxingVideo
-simple auto-video for chaoxing
+简陋的超星自动刷课脚本
