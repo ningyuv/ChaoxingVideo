@@ -10,6 +10,16 @@ import requests
 import json
 import time
 
+import logging
+logFileName = (str(time.ctime() + "_Selenium.log").replace(":","-").replace(" ",""))
+logger = logging.getLogger(__name__)
+logFormat = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
+logHandler = logging.FileHandler(logFileName)
+logHandler.setFormatter(logFormat)
+logger.addHandler(logHandler)
+#Log Level
+logger.setLevel(logging.DEBUG)
+
 class AutoVideo:
     def __init__(self):
         self.webDri = webdriver.Chrome()
@@ -65,6 +75,7 @@ class AutoVideo:
         for i in self.missionList:
             if i['point'] == '2':
                 print('Learning ' + i['title'])
+                logger.info('Learning ' + i['title'])
                 self.webDri.get(i['href'])
                 try:
                     dct1 = WebDriverWait(self.webDri, 10).until(
@@ -143,6 +154,7 @@ class AutoVideo:
         res = self.getHTMLText(url = questionUrl)
         res = json.loads(res)
         print(res)
+        logger.info(res)
         currentTime = self.webDri.execute_script('javascript:return arguments[0].currentTime', self.video)
         if res == '':
             return True
